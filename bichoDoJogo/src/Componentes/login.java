@@ -1,3 +1,4 @@
+package Componentes;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -12,7 +13,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-public class ProjetoA3 extends JFrame {
+public class login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -26,7 +27,7 @@ public class ProjetoA3 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ProjetoA3 frame = new ProjetoA3();
+					login frame = new login();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +39,7 @@ public class ProjetoA3 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ProjetoA3() {
+	public login() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\825163387\\Downloads\\2b83c11f-b1de-4a88-ac96-5120c8186929.jfif"));
 		setForeground(new Color(255, 255, 255));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

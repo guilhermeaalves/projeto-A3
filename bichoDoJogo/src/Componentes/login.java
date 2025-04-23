@@ -37,7 +37,7 @@ public class login extends JFrame {
 	}
 
 	public login() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("F:\\Este Computador\\Volume Principal (F:)\\ logoA3"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Downloads\\icone bicho do jogo.png"));
 		setForeground(new Color(255, 255, 255));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1360, 898);
@@ -49,8 +49,8 @@ public class login extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel imagemLogo = new JLabel("");
-		imagemLogo.setIcon(new ImageIcon("F:\\logoA3.jpg"));
-		imagemLogo.setBounds(388, 0, 597, 321);
+		imagemLogo.setIcon(new ImageIcon("C:\\Users\\User\\Downloads\\logo bicho do jogo.png"));
+		imagemLogo.setBounds(396, 0, 597, 321);
 		contentPane.add(imagemLogo);
 		
 		textoSenha = new JPasswordField();

@@ -40,7 +40,7 @@ public class login extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Downloads\\icone bicho do jogo.png"));
 		setForeground(new Color(255, 255, 255));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1360, 898);
+		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -50,28 +50,28 @@ public class login extends JFrame {
 		
 		JLabel imagemLogo = new JLabel("");
 		imagemLogo.setIcon(new ImageIcon("C:\\Users\\User\\Downloads\\logo bicho do jogo.png"));
-		imagemLogo.setBounds(396, 0, 597, 321);
+		imagemLogo.setBounds(382, 2, 597, 321);
 		contentPane.add(imagemLogo);
 		
 		textoSenha = new JPasswordField();
 		textoSenha.setFont(new Font("Arial", Font.PLAIN, 18));
-		textoSenha.setBounds(424, 590, 442, 54);
+		textoSenha.setBounds(424, 507, 442, 54);
 		contentPane.add(textoSenha);
 		
 		JLabel lblTitulo = new JLabel("Entre na sua Conta");
 		lblTitulo.setFont(new Font("Arial", Font.PLAIN, 28));
 		lblTitulo.setForeground(new Color(255, 128, 0));
-		lblTitulo.setBounds(496, 285, 358, 38);
+		lblTitulo.setBounds(508, 285, 358, 38);
 		contentPane.add(lblTitulo);
 		
 		JLabel lblSubTitulo = new JLabel("Insira seu e-mail e sua senha para acessar sua conta!");
 		lblSubTitulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblSubTitulo.setBounds(467, 332, 364, 14);
+		lblSubTitulo.setBounds(474, 334, 364, 14);
 		contentPane.add(lblSubTitulo);
 		
 		JLabel lblEmail = new JLabel("EMAIL");
 		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblEmail.setBounds(424, 396, 46, 14);
+		lblEmail.setBounds(424, 372, 46, 14);
 		contentPane.add(lblEmail);
 		
 		JButton botaoEntrar = new JButton("Entrar");
@@ -81,18 +81,18 @@ public class login extends JFrame {
 		});
 		botaoEntrar.setForeground(new Color(255, 255, 255));
 		botaoEntrar.setBackground(new Color(0, 0, 0));
-		botaoEntrar.setBounds(424, 677, 443, 38);
+		botaoEntrar.setBounds(424, 591, 443, 38);
 		contentPane.add(botaoEntrar);
 		
 		textoEmail = new JTextField();
 		textoEmail.setFont(new Font("Arial", Font.PLAIN, 18));
-		textoEmail.setBounds(424, 440, 442, 54);
+		textoEmail.setBounds(424, 406, 442, 54);
 		contentPane.add(textoEmail);
 		textoEmail.setColumns(10);
 		
 		JLabel lblSenha = new JLabel("SENHA");
 		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblSenha.setBounds(424, 545, 46, 14);
+		lblSenha.setBounds(424, 482, 46, 14);
 		contentPane.add(lblSenha);
 		
 		JLabel esqueceuSenha = new JLabel("Esqueceu sua senha?");

@@ -1,4 +1,5 @@
 package Componentes;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -12,17 +13,16 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JPasswordField passwordField;
-	private JTextField textField;
+	private JPasswordField textoSenha;
+	private JTextField textoEmail;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -36,11 +36,8 @@ public class login extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public login() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\825163387\\Downloads\\2b83c11f-b1de-4a88-ac96-5120c8186929.jfif"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("F:\\Este Computador\\Volume Principal (F:)\\ logoA3"));
 		setForeground(new Color(255, 255, 255));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1360, 898);
@@ -51,52 +48,56 @@ public class login extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\825163387\\Downloads\\WhatsApp Image 2025-04-17 at 16.26.48.jpeg"));
-		lblNewLabel.setBounds(388, 0, 597, 321);
-		contentPane.add(lblNewLabel);
+		JLabel imagemLogo = new JLabel("");
+		imagemLogo.setIcon(new ImageIcon("F:\\logoA3.jpg"));
+		imagemLogo.setBounds(388, 0, 597, 321);
+		contentPane.add(imagemLogo);
 		
-		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Arial", Font.PLAIN, 18));
-		passwordField.setBounds(424, 590, 442, 54);
-		contentPane.add(passwordField);
+		textoSenha = new JPasswordField();
+		textoSenha.setFont(new Font("Arial", Font.PLAIN, 18));
+		textoSenha.setBounds(424, 590, 442, 54);
+		contentPane.add(textoSenha);
 		
-		JLabel lblNewLabel_1 = new JLabel("Entre na sua Conta");
-		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 28));
-		lblNewLabel_1.setForeground(new Color(255, 128, 0));
-		lblNewLabel_1.setBounds(496, 285, 358, 38);
-		contentPane.add(lblNewLabel_1);
+		JLabel lblTitulo = new JLabel("Entre na sua Conta");
+		lblTitulo.setFont(new Font("Arial", Font.PLAIN, 28));
+		lblTitulo.setForeground(new Color(255, 128, 0));
+		lblTitulo.setBounds(496, 285, 358, 38);
+		contentPane.add(lblTitulo);
 		
-		JLabel lblNewLabel_2 = new JLabel("Insira seu e-mail e sua senha para acessar sua conta!");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(467, 332, 364, 14);
-		contentPane.add(lblNewLabel_2);
+		JLabel lblSubTitulo = new JLabel("Insira seu e-mail e sua senha para acessar sua conta!");
+		lblSubTitulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblSubTitulo.setBounds(467, 332, 364, 14);
+		contentPane.add(lblSubTitulo);
 		
-		JLabel lblNewLabel_3 = new JLabel("EMAIL");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_3.setBounds(424, 396, 46, 14);
-		contentPane.add(lblNewLabel_3);
+		JLabel lblEmail = new JLabel("EMAIL");
+		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblEmail.setBounds(424, 396, 46, 14);
+		contentPane.add(lblEmail);
 		
-		JButton btnNewButton = new JButton("Entrar");
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(0, 0, 0));
-		btnNewButton.setBounds(424, 677, 443, 38);
-		contentPane.add(btnNewButton);
+		JButton botaoEntrar = new JButton("Entrar");
+		botaoEntrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		botaoEntrar.setForeground(new Color(255, 255, 255));
+		botaoEntrar.setBackground(new Color(0, 0, 0));
+		botaoEntrar.setBounds(424, 677, 443, 38);
+		contentPane.add(botaoEntrar);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Arial", Font.PLAIN, 18));
-		textField.setBounds(424, 442, 442, 54);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		textoEmail = new JTextField();
+		textoEmail.setFont(new Font("Arial", Font.PLAIN, 18));
+		textoEmail.setBounds(424, 440, 442, 54);
+		contentPane.add(textoEmail);
+		textoEmail.setColumns(10);
 		
-		JLabel lblNewLabel_3_1 = new JLabel("SENHA");
-		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_3_1.setBounds(424, 545, 46, 14);
-		contentPane.add(lblNewLabel_3_1);
+		JLabel lblSenha = new JLabel("SENHA");
+		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblSenha.setBounds(424, 545, 46, 14);
+		contentPane.add(lblSenha);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("Esqueceu sua senha?");
-		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_2_1.setBounds(424, 744, 442, 38);
-		contentPane.add(lblNewLabel_2_1);
+		JLabel esqueceuSenha = new JLabel("Esqueceu sua senha?");
+		esqueceuSenha.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		esqueceuSenha.setBounds(424, 744, 442, 38);
+		contentPane.add(esqueceuSenha);
 	}
 }

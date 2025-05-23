@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
--- Host: localhost    Database: jogo_bicho
+-- Host: 127.0.0.1    Database: jogo_bicho
 -- ------------------------------------------------------
--- Server version	8.0.36
+-- Server version	8.0.42
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `jogo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `jogo` (
-  `id_aposta` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL AUTO_INCREMENT,
   `num_apostas` int NOT NULL DEFAULT '0',
   `valor_apostado` int NOT NULL,
-  KEY `id_aposta` (`id_aposta`),
-  CONSTRAINT `jogo_ibfk_1` FOREIGN KEY (`id_aposta`) REFERENCES `user` (`id_usuario`)
+  KEY `id_aposta` (`id_usuario`),
+  CONSTRAINT `jogo_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `user` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -49,10 +49,12 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id_usuario` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(320) NOT NULL,
+  `email` varchar(320) DEFAULT NULL,
   `cpf` int NOT NULL,
-  `senha` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_usuario`)
+  `senha` varchar(11) DEFAULT NULL,
+  PRIMARY KEY (`id_usuario`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `senha` (`senha`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -73,10 +75,10 @@ DROP TABLE IF EXISTS `user_saldo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_saldo` (
-  `id_saldo` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL AUTO_INCREMENT,
   `saldo` int NOT NULL DEFAULT '0',
-  KEY `id_saldo` (`id_saldo`),
-  CONSTRAINT `user_saldo_ibfk_1` FOREIGN KEY (`id_saldo`) REFERENCES `user` (`id_usuario`)
+  KEY `id_saldo` (`id_usuario`),
+  CONSTRAINT `user_saldo_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `user` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -98,4 +100,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-22 19:56:37
+-- Dump completed on 2025-05-23 19:15:13

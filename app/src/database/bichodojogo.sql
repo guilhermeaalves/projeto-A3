@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: jogo_bicho
+-- Host: localhost    Database: jogodobicho
 -- ------------------------------------------------------
 -- Server version	8.0.42
 
@@ -49,13 +49,13 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id_usuario` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(320) UNIQUE,
-  `cpf` varchar(11) UNIQUE,
-  senha VARCHAR(255),
+  `email` varchar(320) DEFAULT NULL,
+  `cpf` varchar(11) DEFAULT NULL,
+  `senha` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `senha` (`senha`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `cpf` (`cpf`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,10 +76,10 @@ DROP TABLE IF EXISTS `user_saldo`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_saldo` (
   `id_usuario` int NOT NULL AUTO_INCREMENT,
-  `saldo` int NOT NULL DEFAULT '0',
+  `saldo` double NOT NULL DEFAULT '0',
   KEY `id_saldo` (`id_usuario`),
   CONSTRAINT `user_saldo_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `user` (`id_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,4 +100,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-23 19:15:13
+-- Dump completed on 2025-05-27 16:15:42

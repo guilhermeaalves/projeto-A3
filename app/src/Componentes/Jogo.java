@@ -4,12 +4,10 @@
  */
 package Componentes;
 
-import database.Conexao;
 import java.awt.event.ActionEvent;
 import java.security.SecureRandom;
-import java.sql.*;
+
 import static javax.swing.JOptionPane.*;
-import database.Conexao;
 
 public class Jogo extends javax.swing.JFrame {
 

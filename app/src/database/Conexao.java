@@ -3,9 +3,9 @@ import java.sql.*;
 
 public class Conexao {
 
-    private static final String url = "jdbc:mysql://localhost:3306/jogoDoBicho";
+    private static final String url = "jdbc:mysql://localhost:3306/jogo_bicho";
     private static final String user = "root";
-    private static final String password = "0584";
+    private static final String password = "Katia2500@@";
 
     private static Connection conn;
 

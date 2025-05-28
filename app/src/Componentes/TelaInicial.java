@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Componentes;
-
+import static Componentes.Login.*;
+import static Componentes.Cadastro.*;
 /**
  *
  * @author 825128186
@@ -57,6 +58,11 @@ public class TelaInicial extends javax.swing.JFrame {
 
         btLogin.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btLogin.setText("Login");
+        btLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLoginActionPerformed(evt);
+            }
+        });
 
         btCadastro.setBackground(new java.awt.Color(0, 0, 0));
         btCadastro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -137,12 +143,19 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btJogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJogarActionPerformed
-        // TODO add your handling code here:
+        new Login().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btJogarActionPerformed
 
     private void btCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroActionPerformed
-        // TODO add your handling code here:
+        new Cadastro().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btCadastroActionPerformed
+
+    private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
+        new Login().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btLoginActionPerformed
 
     /**
      * @param args the command line arguments

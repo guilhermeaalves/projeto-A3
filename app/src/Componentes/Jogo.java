@@ -4,10 +4,16 @@
  */
 package Componentes;
 
+import database.Conexao;
+
 import java.awt.event.ActionEvent;
 import java.security.SecureRandom;
-
 import static javax.swing.JOptionPane.*;
+import java.sql.*;
+import static Componentes.Deposito.*;
+import static Componentes.Saque.*;
+import static Componentes.TelaInicialPosLogin.*;
+
 
 public class Jogo extends javax.swing.JFrame {
 
@@ -29,12 +35,19 @@ public class Jogo extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btAposta = new javax.swing.JButton();
         valorApostaInput = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setPreferredSize(new java.awt.Dimension(602, 127));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/logo1_resized_50x50.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         btDeposito.setBackground(new java.awt.Color(245, 99, 39));
         btDeposito.setText("Depósito");
@@ -87,7 +100,7 @@ public class Jogo extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/logo2.png"))); // NOI18N
 
-        numeroApostaInput.setText("1 - 10.000");
+        numeroApostaInput.setToolTipText("");
         numeroApostaInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 numeroApostaInputActionPerformed(evt);
@@ -106,12 +119,15 @@ public class Jogo extends javax.swing.JFrame {
             }
         });
 
-        valorApostaInput.setText("R$0,00");
         valorApostaInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 valorApostaInputActionPerformed(evt);
             }
         });
+
+        jLabel2.setText("Número");
+
+        jLabel5.setText("Valor");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,7 +143,9 @@ public class Jogo extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(numeroApostaInput, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(valorApostaInput, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(valorApostaInput, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5))
                         .addGap(509, 509, 509)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -147,14 +165,21 @@ public class Jogo extends javax.swing.JFrame {
                 .addGap(80, 80, 80)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(numeroApostaInput, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addGap(3, 3, 3)
                 .addComponent(valorApostaInput, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(36, 36, 36)
                 .addComponent(btAposta, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,10 +187,14 @@ public class Jogo extends javax.swing.JFrame {
 
     private void btDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDepositoActionPerformed
         // TODO add your handling code here:
+        new Deposito().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btDepositoActionPerformed
 
     private void btSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaqueActionPerformed
         // TODO add your handling code here:
+        new Saque().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btSaqueActionPerformed
 
     private void numeroApostaInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numeroApostaInputActionPerformed
@@ -176,21 +205,58 @@ public class Jogo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_valorApostaInputActionPerformed
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        new TelaInicialPosLogin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     private void btApostaActionPerformed(ActionEvent evt) {
 
-        String numAposta = numeroApostaInput.getText();
-        String valorAposta = numeroApostaInput.getText();
-        SecureRandom sr = new SecureRandom();
+        try {
+            int numAposta = Integer.parseInt(numeroApostaInput.getText());
+            double valorAposta = Double.parseDouble(valorApostaInput.getText());
+            double saldoInicial = Double.parseDouble(saldo.getText());
+            int idUser = SessaoUsuario.idUsuarioLogado;
 
-        int numeroSorteado = sr.nextInt(10000) + 1;
+            if (valorAposta > saldoInicial) {
+                showMessageDialog(this, "Saldo insuficiente para essa aposta.");
+                return;
+            }
 
-        if (numeroSorteado == Integer.parseInt(numAposta)) {
-            showMessageDialog(this, "Você ganhou !" + (Integer.parseInt(valorAposta) * 2));
-        } else {
-            showMessageDialog(this, "Não foi dessa vez, seu saldo atual é de: ");
+            SecureRandom sr = new SecureRandom();
+            int numeroSorteado = sr.nextInt(10000) + 1;
+
+            double saldoFinal;
+
+            if (numAposta == numeroSorteado) {
+
+                saldoFinal = saldoInicial + (valorAposta * 2);
+                showMessageDialog(this, "Você ganhou !");
+                showMessageDialog(this, "Ganho de: " + (valorAposta * 2));
+                saldo.setText(String.valueOf(saldoFinal));
+
+
+            } else {
+                saldoFinal = saldoInicial - valorAposta;
+                showMessageDialog(this, "Não foi dessa vez");
+                showMessageDialog(this, "Perda de: " + valorAposta);
+            }
+
+            saldo.setText(String.valueOf(saldoFinal));
+
+            String sql = "UPDATE user_saldo SET saldo = ? WHERE id = ?";
+            Connection conn = Conexao.getConexao();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setDouble(1, saldoFinal);
+            pstmt.setInt(2, idUser);
+            pstmt.executeUpdate();
+            pstmt.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showMessageDialog(this, e.getMessage());
         }
-
-
     }
 
     /**
@@ -234,8 +300,10 @@ public class Jogo extends javax.swing.JFrame {
     private javax.swing.JButton btDeposito;
     private javax.swing.JButton btSaque;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField numeroApostaInput;
     private javax.swing.JLabel saldo;

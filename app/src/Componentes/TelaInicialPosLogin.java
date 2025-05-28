@@ -4,7 +4,7 @@
  */
 package Componentes;
 import static Componentes.Jogo.*;
-import static Componentes.Deposito..*;
+import static Componentes.Deposito.*;
 
 /**
  *

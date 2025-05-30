@@ -8,7 +8,7 @@ import database.Conexao;
 
 import javax.swing.*;
 
-import static Componentes.login.*;
+import static Componentes.Login.*;
 
 import java.awt.event.ActionEvent;
 import java.sql.*;
@@ -193,7 +193,9 @@ public class cadastro extends javax.swing.JFrame {
             pstmt.executeUpdate();
 
             showMessageDialog(this, "Conta criada com sucesso!");
-            new login().setVisible(true);
+            conn.close();
+            pstmt.close();
+            new Login().setVisible(true);
             this.dispose();
 
         } catch (SQLException e) {

@@ -8,7 +8,7 @@ import database.Conexao;
 
 import javax.swing.*;
 
-import static Componentes.login.*;
+import static Componentes.Login.*;
 
 import java.awt.event.ActionEvent;
 import java.sql.*;
@@ -19,12 +19,12 @@ import static javax.swing.JOptionPane.showMessageDialog;
 /**
  * @author Alves
  */
-public class Cadastro extends javax.swing.JFrame {
+public class cadastro extends javax.swing.JFrame {
 
     /**
      * Creates new form cadastro
      */
-    public Cadastro() {
+    public cadastro() {
         initComponents();
     }
 
@@ -52,7 +52,9 @@ public class Cadastro extends javax.swing.JFrame {
         jLabel47 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
+        setPreferredSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
 
         jLabel39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/logo2.png"))); // NOI18N
@@ -191,7 +193,9 @@ public class Cadastro extends javax.swing.JFrame {
             pstmt.executeUpdate();
 
             showMessageDialog(this, "Conta criada com sucesso!");
-            new login().setVisible(true);
+            conn.close();
+            pstmt.close();
+            new Login().setVisible(true);
             this.dispose();
 
         } catch (SQLException e) {
@@ -218,21 +222,20 @@ public class Cadastro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Cadastro().setVisible(true);
+                new cadastro().setVisible(true);
             }
         });
     }

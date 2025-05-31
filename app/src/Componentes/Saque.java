@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Componentes;
+import Componentes.TelaInicialPosLogin;
+import javax.swing.JOptionPane;
+import java.sql.*;
+ import database.Conexao;
 
-/**
- *
- * @author 825128186
- */
 public class Saque extends javax.swing.JFrame {
 
     /**
@@ -32,6 +28,12 @@ public class Saque extends javax.swing.JFrame {
         saldo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         inputCpf = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter cpf = new javax.swing.text.MaskFormatter("###.###.###-##");
+
+            inputCpf = new javax.swing.JFormattedTextField(cpf);
+        }catch(Exception e){
+        }
         jLabel1 = new javax.swing.JLabel();
         btConfirmaSaque = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -57,6 +59,11 @@ public class Saque extends javax.swing.JFrame {
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/logo1_resized_50x50.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         saldo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         saldo.setText("$ 0,00");
@@ -119,7 +126,6 @@ public class Saque extends javax.swing.JFrame {
             }
         });
 
-        inputValor.setText("R$200,00");
         inputValor.setToolTipText("");
         inputValor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -244,12 +250,74 @@ public class Saque extends javax.swing.JFrame {
     }//GEN-LAST:event_inputCpfActionPerformed
 
     private void btConfirmaSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmaSaqueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btConfirmaSaqueActionPerformed
+    try {
+        String cpf = inputCpf.getText().trim();
+        String valorStr = inputValor.getText().trim().replace(",", ".");
+        double valor = Double.parseDouble(valorStr);
+
+        if (valor < 200) {
+            JOptionPane.showMessageDialog(this, "O valor mínimo para saque é R$200.");
+            return;
+        }
+
+        Connection conn = Conexao.getConexao();
+
+      
+        String sqlBuscaUsuario = "SELECT id_usuario FROM user WHERE cpf = ?";
+        PreparedStatement stmtBusca = conn.prepareStatement(sqlBuscaUsuario);
+        stmtBusca.setString(1, cpf);
+        ResultSet rs = stmtBusca.executeQuery();
+
+        if (!rs.next()) {
+            JOptionPane.showMessageDialog(this, "Usuário com esse CPF não foi encontrado.");
+            return;
+        }
+
+        int idUsuario = rs.getInt("id_usuario");
+
+        
+        String sqlVerificaSaldo = "SELECT saldo FROM user_saldo WHERE id_usuario = ?";
+        PreparedStatement stmtVerifica = conn.prepareStatement(sqlVerificaSaldo);
+        stmtVerifica.setInt(1, idUsuario);
+        ResultSet rsSaldo = stmtVerifica.executeQuery();
+
+        if (!rsSaldo.next()) {
+            JOptionPane.showMessageDialog(this, "Usuário não possui saldo cadastrado.");
+            return;
+        }
+
+        double saldoAtual = rsSaldo.getDouble("saldo");
+
+        if (saldoAtual < valor) {
+            JOptionPane.showMessageDialog(this, "Saldo insuficiente para saque.");
+            return;
+        }
+
+       
+        String sqlSaque = "UPDATE user_saldo SET saldo = saldo - ? WHERE id_usuario = ?";
+        PreparedStatement stmtSaque = conn.prepareStatement(sqlSaque);
+        stmtSaque.setDouble(1, valor);
+        stmtSaque.setInt(2, idUsuario);
+        stmtSaque.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Saque realizado com sucesso!");
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Digite um valor numérico válido.");
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Erro ao realizar saque: " + e.getMessage());
+    }
+}
+//GEN-LAST:event_btConfirmaSaqueActionPerformed
 
     private void inputChavePixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputChavePixActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inputChavePixActionPerformed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        new TelaInicialPosLogin().setVisible(true);
+
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments

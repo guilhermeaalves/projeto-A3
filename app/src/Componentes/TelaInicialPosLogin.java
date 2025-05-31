@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Componentes;
-import static Componentes.Jogo.*;
-import static Componentes.Deposito.*;
 
 /**
  *
@@ -143,14 +141,11 @@ public class TelaInicialPosLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btJogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJogarActionPerformed
-        new Jogo().setVisible(true);
-        dispose();
-
+        // TODO add your handling code here:
     }//GEN-LAST:event_btJogarActionPerformed
 
     private void btDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDepositoActionPerformed
-        new Deposito().setVisible(true);
-        dispose();
+        // TODO add your handling code here:
     }//GEN-LAST:event_btDepositoActionPerformed
 
     /**

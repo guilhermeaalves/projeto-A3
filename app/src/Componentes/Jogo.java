@@ -13,6 +13,7 @@ public class Jogo extends javax.swing.JFrame {
 
     public Jogo() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -162,10 +163,16 @@ public class Jogo extends javax.swing.JFrame {
 
     private void btDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDepositoActionPerformed
         // TODO add your handling code here:
+
+        new Deposito().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btDepositoActionPerformed
 
     private void btSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaqueActionPerformed
         // TODO add your handling code here:
+
+        new Saque().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btSaqueActionPerformed
 
     private void numeroApostaInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numeroApostaInputActionPerformed

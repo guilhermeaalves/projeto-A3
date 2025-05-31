@@ -15,6 +15,7 @@ public class TelaInicialPosLogin extends javax.swing.JFrame {
      */
     public TelaInicialPosLogin() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -58,6 +59,11 @@ public class TelaInicialPosLogin extends javax.swing.JFrame {
 
         btSaque.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btSaque.setText("Saque");
+        btSaque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSaqueActionPerformed(evt);
+            }
+        });
 
         btDeposito.setBackground(new java.awt.Color(255, 102, 0));
         btDeposito.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -109,7 +115,7 @@ public class TelaInicialPosLogin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1279, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(371, 371, 371)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,7 +127,7 @@ public class TelaInicialPosLogin extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(64, 64, 64)
                                 .addComponent(btJogar, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(371, Short.MAX_VALUE))
+                .addContainerGap(370, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,11 +148,22 @@ public class TelaInicialPosLogin extends javax.swing.JFrame {
 
     private void btJogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJogarActionPerformed
         // TODO add your handling code here:
+        new Jogo().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btJogarActionPerformed
 
     private void btDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDepositoActionPerformed
         // TODO add your handling code here:
+        new Deposito().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btDepositoActionPerformed
+
+    private void btSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaqueActionPerformed
+        // TODO add your handling code here:
+
+        new Saque().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btSaqueActionPerformed
 
     /**
      * @param args the command line arguments

@@ -15,6 +15,7 @@ public class Saque extends javax.swing.JFrame {
      */
     public Saque() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -53,6 +54,11 @@ public class Saque extends javax.swing.JFrame {
         btDeposito.setBackground(new java.awt.Color(245, 99, 39));
         btDeposito.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btDeposito.setText("Depósito");
+        btDeposito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDepositoActionPerformed(evt);
+            }
+        });
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -250,6 +256,13 @@ public class Saque extends javax.swing.JFrame {
     private void inputChavePixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputChavePixActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inputChavePixActionPerformed
+
+    private void btDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDepositoActionPerformed
+        // TODO add your handling code here:
+
+        new Deposito().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btDepositoActionPerformed
 
     /**
      * @param args the command line arguments

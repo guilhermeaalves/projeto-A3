@@ -15,6 +15,7 @@ public class Deposito extends javax.swing.JFrame {
      */
     public Deposito() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -241,6 +242,9 @@ public class Deposito extends javax.swing.JFrame {
 
     private void btSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaqueActionPerformed
         // TODO add your handling code here:
+
+        new Saque().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btSaqueActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked

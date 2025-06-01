@@ -1,3 +1,4 @@
 /bichoDoJogo/nbproject/private/
 .idea/
 /app/nbproject/private/
+*.class\napp/build/

@@ -26,7 +26,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        this.setSize(1279, 720);
+        this.setSize(1280, 720);
         this.setLocationRelativeTo(null);
     }
 
@@ -156,6 +156,10 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public static class SessaoUsuario {
+        public static int idUsuarioLogado;
+    }
+
     private void btLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogarActionPerformed
         // TODO add your handling code here:
 
@@ -173,7 +177,8 @@ public class Login extends javax.swing.JFrame {
             ResultSet rs = pstm.executeQuery();
 
             if (rs.next()){
-
+                int idUsuario = rs.getInt("id_usuario");
+                SessaoUsuario.idUsuarioLogado = idUsuario;
                 new TelaInicialPosLogin().setVisible(true);
                 this.dispose();
 

@@ -2,7 +2,8 @@ package Componentes;
 import Componentes.TelaInicialPosLogin;
 import javax.swing.JOptionPane;
 import java.sql.*;
- import database.Conexao;
+import database.Conexao;
+import static Componentes.ConsultaSaldo.*;
 
 public class Saque extends javax.swing.JFrame {
 
@@ -11,6 +12,9 @@ public class Saque extends javax.swing.JFrame {
      */
     public Saque() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        double saldoAtual = ConsultaSaldo.consultarSaldo(Login.SessaoUsuario.idUsuarioLogado);
+        saldo.setText(String.format("R$ %.2f", saldoAtual));
     }
 
     /**

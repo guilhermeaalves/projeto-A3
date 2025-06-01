@@ -1,54 +1,63 @@
-package Componentes; 
+package Componentes;
+
 import Componentes.TelaInicialPosLogin;
+
 import java.sql.*;
+
 import database.Conexao;
+
 import javax.swing.JOptionPane;
 
+import static Componentes.Login.*;
 
+import static Componentes.ConsultaSaldo.*;
 
 public class Deposito extends javax.swing.JFrame {
 
 
-    
     public Deposito() {
         initComponents();
         this.setLocationRelativeTo(null);
+        double saldoAtual = ConsultaSaldo.consultarSaldo(SessaoUsuario.idUsuarioLogado);
+        saldo.setText(String.format("R$ %.2f", saldoAtual));
     }
-private void atualizarSaldo(String cpf) {
-    try {
-        Connection conn = Conexao.getConexao();
 
-        
-        String sqlBuscaUsuario = "SELECT id_usuario FROM user WHERE cpf = ?";
-        PreparedStatement stmtBusca = conn.prepareStatement(sqlBuscaUsuario);
-        stmtBusca.setString(1, cpf);
-        ResultSet rs = stmtBusca.executeQuery();
+    private void atualizarSaldo(String cpf) {
+        try {
+            int idUser = SessaoUsuario.idUsuarioLogado;
+            Connection conn = Conexao.getConexao();
 
-        if (!rs.next()) {
-            jLabel8.setText("Saldo: R$ 0.00");
-            return;
+
+            String sqlBuscaUsuario = "SELECT id_usuario FROM user WHERE cpf = ?";
+            PreparedStatement stmtBusca = conn.prepareStatement(sqlBuscaUsuario);
+            stmtBusca.setString(1, cpf);
+            ResultSet rs = stmtBusca.executeQuery();
+
+            if (!rs.next()) {
+                saldo.setText("Saldo: R$ 0.00");
+                return;
+            }
+
+            int idUsuario = rs.getInt("id_usuario");
+
+
+            String sqlBuscaSaldo = "SELECT saldo FROM user_saldo WHERE id_usuario = ?";
+            PreparedStatement stmtSaldo = conn.prepareStatement(sqlBuscaSaldo);
+            stmtSaldo.setInt(1, idUser);
+            ResultSet rsSaldo = stmtSaldo.executeQuery();
+
+            if (rsSaldo.next()) {
+                double saldoAtual = rsSaldo.getDouble("saldo");
+                saldo.setText(String.format("Saldo: R$ %.2f", saldoAtual));
+            } else {
+                saldo.setText("Saldo: R$ 0.00");
+            }
+
+        } catch (SQLException e) {
+            saldo.setText("Erro ao consultar saldo");
         }
-
-        int idUsuario = rs.getInt("id_usuario");
-
-        
-        String sqlBuscaSaldo = "SELECT saldo FROM user_saldo WHERE id_usuario = ?";
-        PreparedStatement stmtSaldo = conn.prepareStatement(sqlBuscaSaldo);
-        stmtSaldo.setInt(1, idUsuario);
-        ResultSet rsSaldo = stmtSaldo.executeQuery();
-
-        if (rsSaldo.next()) {
-            double saldo = rsSaldo.getDouble("saldo");
-            jLabel8.setText(String.format("Saldo: R$ %.2f", saldo));
-        } else {
-            jLabel8.setText("Saldo: R$ 0.00");
-        }
-
-    } catch (SQLException e) {
-        jLabel8.setText("Erro ao consultar saldo");
     }
-}
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -56,7 +65,7 @@ private void atualizarSaldo(String cpf) {
         jPanel1 = new javax.swing.JPanel();
         btSaque = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        saldo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         inputCpf = new javax.swing.JTextField();
         try{
@@ -99,8 +108,8 @@ private void atualizarSaldo(String cpf) {
             }
         });
 
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("R$ 0,00");
+        saldo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        saldo.setText("R$ 0,00");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -110,7 +119,7 @@ private void atualizarSaldo(String cpf) {
                 .addGap(90, 90, 90)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(btSaque)
                 .addGap(90, 90, 90))
@@ -121,10 +130,10 @@ private void atualizarSaldo(String cpf) {
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btSaque)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(40, 40, 40))
         );
@@ -268,61 +277,52 @@ private void atualizarSaldo(String cpf) {
     }//GEN-LAST:event_inputCpfActionPerformed
 
     private void btConfirmaDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmaDepositoActionPerformed
-try {
-        String cpf = inputCpf.getText().trim();
-        String valorStr = inputValor.getText().trim().replace(",", ".");
-        double valor = Double.parseDouble(valorStr);
+        int idUser = SessaoUsuario.idUsuarioLogado;
 
-        if (valor <= 0) {
-            JOptionPane.showMessageDialog(this, "Insira um valor válido.");
-            return;
+        try {
+            String cpf = inputCpf.getText().trim();
+            String valorStr = inputValor.getText().trim().replace(",", ".");
+            double valor = Double.parseDouble(valorStr);
+
+            if (valor <= 0) {
+                JOptionPane.showMessageDialog(this, "Insira um valor válido.");
+                return;
+            }
+
+            Connection conn = Conexao.getConexao();
+
+            int idUsuario = SessaoUsuario.idUsuarioLogado;
+
+            String sqlVerificaSaldo = "SELECT saldo FROM user_saldo WHERE id_usuario = ?";
+            PreparedStatement stmtVerifica = conn.prepareStatement(sqlVerificaSaldo);
+            stmtVerifica.setInt(1, idUsuario);
+            ResultSet rsSaldo = stmtVerifica.executeQuery();
+
+            if (rsSaldo.next()) {
+
+                String sqlUpdate = "UPDATE user_saldo SET saldo = saldo + ? WHERE id_usuario = ?";
+                PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdate);
+                stmtUpdate.setDouble(1, valor);
+                stmtUpdate.setInt(2, idUsuario);
+                stmtUpdate.executeUpdate();
+            } else {
+
+                String sqlInsert = "INSERT INTO user_saldo (id_usuario, saldo) VALUES (?, ?)";
+                PreparedStatement stmtInsert = conn.prepareStatement(sqlInsert);
+                stmtInsert.setInt(1, idUsuario);
+                stmtInsert.setDouble(2, valor);
+                stmtInsert.executeUpdate();
+            }
+
+            JOptionPane.showMessageDialog(this, "Depósito realizado com sucesso!");
+            atualizarSaldo(cpf);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Digite um valor numérico válido.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao realizar depósito: " + e.getMessage());
         }
-
-        Connection conn = Conexao.getConexao(); 
-
-        
-        String sqlBuscaUsuario = "SELECT id_usuario FROM user WHERE cpf = ?";
-        PreparedStatement stmtBusca = conn.prepareStatement(sqlBuscaUsuario);
-        stmtBusca.setString(1, cpf);
-        ResultSet rs = stmtBusca.executeQuery();
-
-        if (!rs.next()) {
-            JOptionPane.showMessageDialog(this, "Usuário com esse CPF não foi encontrado.");
-            return;
-        }
-
-        int idUsuario = rs.getInt("id_usuario");
-
-
-        String sqlVerificaSaldo = "SELECT saldo FROM user_saldo WHERE id_usuario = ?";
-        PreparedStatement stmtVerifica = conn.prepareStatement(sqlVerificaSaldo);
-        stmtVerifica.setInt(1, idUsuario);
-        ResultSet rsSaldo = stmtVerifica.executeQuery();
-
-        if (rsSaldo.next()) {
-            
-            String sqlUpdate = "UPDATE user_saldo SET saldo = saldo + ? WHERE id_usuario = ?";
-            PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdate);
-            stmtUpdate.setDouble(1, valor);
-            stmtUpdate.setInt(2, idUsuario);
-            stmtUpdate.executeUpdate();
-        } else {
-            
-            String sqlInsert = "INSERT INTO user_saldo (id_usuario, saldo) VALUES (?, ?)";
-            PreparedStatement stmtInsert = conn.prepareStatement(sqlInsert);
-            stmtInsert.setInt(1, idUsuario);
-            stmtInsert.setDouble(2, valor);
-            stmtInsert.executeUpdate();
-        }
-
-        JOptionPane.showMessageDialog(this, "Depósito realizado com sucesso!");
-        atualizarSaldo(cpf);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Digite um valor numérico válido.");
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Erro ao realizar depósito: " + e.getMessage());
-    }
-}        // TODO add your handling code here:
+    }        // TODO add your handling code here:
 //GEN-LAST:event_btConfirmaDepositoActionPerformed
 
     private void btSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaqueActionPerformed
@@ -334,7 +334,7 @@ try {
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         new TelaInicialPosLogin().setVisible(true);
-      
+
     }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
@@ -344,7 +344,7 @@ try {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -393,8 +393,8 @@ try {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel saldo;
     // End of variables declaration//GEN-END:variables
 }

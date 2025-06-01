@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Componentes;
+import Componentes.Cadastro.*;
+import Componentes.Login.*;
 
 /**
  *
@@ -15,8 +17,9 @@ public class TelaInicial extends javax.swing.JFrame {
      */
     public TelaInicial() {
         initComponents();
+        this.setSize(1280, 720);
+        this.setLocationRelativeTo(null);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,9 +33,9 @@ public class TelaInicial extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btJogar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        btLogin = new javax.swing.JButton();
         btCadastro = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        btLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -55,9 +58,6 @@ public class TelaInicial extends javax.swing.JFrame {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(600, 130));
 
-        btLogin.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btLogin.setText("Login");
-
         btCadastro.setBackground(new java.awt.Color(0, 0, 0));
         btCadastro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btCadastro.setForeground(new java.awt.Color(255, 255, 255));
@@ -73,6 +73,14 @@ public class TelaInicial extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/logo1_resized_50x50.png"))); // NOI18N
 
+        btLogin.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btLogin.setText("Login");
+        btLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLoginActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -82,7 +90,7 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btLogin)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btCadastro)
                 .addGap(90, 90, 90))
         );
@@ -96,8 +104,8 @@ public class TelaInicial extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btLogin)
-                            .addComponent(btCadastro))))
+                            .addComponent(btCadastro)
+                            .addComponent(btLogin))))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -137,12 +145,19 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btJogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJogarActionPerformed
-        // TODO add your handling code here:
+        new Login().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btJogarActionPerformed
 
     private void btCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroActionPerformed
-        // TODO add your handling code here:
+        new Cadastro().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btCadastroActionPerformed
+
+    private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
+        new Login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btLoginActionPerformed
 
     /**
      * @param args the command line arguments

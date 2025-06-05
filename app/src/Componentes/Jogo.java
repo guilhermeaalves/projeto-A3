@@ -193,11 +193,11 @@ public class Jogo extends JFrame {
             if (numAposta == numeroSorteado) {
 
 
-                int jogadas = consultarJogadas.numJogadas;
+                // int jogadas = consultarJogadas.numJogadas;
                 
-                if (jogadas < 10) {
-                    numeroSorteado = sr.nextInt(10) + 1;
-                }
+                // if (jogadas < 10) {
+                   // numeroSorteado = sr.nextInt(10) + 1;
+                //}
                 saldoFinal = saldoInicial + (valorAposta * 2);
                 showMessageDialog(this, "Você ganhou !");
                 showMessageDialog(this, "Ganho de: " + (valorAposta * 2));

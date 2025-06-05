@@ -45,7 +45,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         inputCPF = new javax.swing.JTextField();
-        inputSenha = new javax.swing.JTextField();
+        inputSenha = new javax.swing.JPasswordField();
         btLogar = new javax.swing.JButton();
         esqueceuSenha = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -165,14 +165,14 @@ public class Login extends javax.swing.JFrame {
 
         try {
             String cpf = inputCPF.getText();
-            String senha = inputSenha.getText();
-
+            char[] senha = inputSenha.getPassword();
+            String senhaConvertida = String.valueOf(senha);
             Connection conn = Conexao.getConexao();
             String sql = "select * from user where cpf = ? and senha = ?";
 
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, cpf);
-            pstm.setString(2, senha);
+            pstm.setString(2, senhaConvertida);
 
             ResultSet rs = pstm.executeQuery();
 
@@ -237,7 +237,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton btLogar;
     private javax.swing.JLabel esqueceuSenha;
     private javax.swing.JTextField inputCPF;
-    private javax.swing.JTextField inputSenha;
+    private javax.swing.JPasswordField inputSenha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

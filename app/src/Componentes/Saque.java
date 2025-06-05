@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 import java.sql.*;
 import database.Conexao;
 import static Componentes.ConsultaSaldo.*;
+import static Componentes.Login.*;
 
 public class Saque extends javax.swing.JFrame {
 
@@ -14,7 +15,8 @@ public class Saque extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         double saldoAtual = ConsultaSaldo.consultarSaldo(Login.SessaoUsuario.idUsuarioLogado);
-        saldo.setText(String.format("R$ %.2f", saldoAtual));
+        String saldostr = String.format(String.valueOf(saldoAtual));
+        saldo.setText(saldostr);
     }
 
     /**
@@ -30,7 +32,6 @@ public class Saque extends javax.swing.JFrame {
         btDeposito = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         saldo = new javax.swing.JLabel();
-        saldo1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         inputCpf = new javax.swing.JTextField();
         try{
@@ -60,11 +61,6 @@ public class Saque extends javax.swing.JFrame {
         btDeposito.setBackground(new java.awt.Color(245, 99, 39));
         btDeposito.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btDeposito.setText("Depósito");
-        btDeposito.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDepositoActionPerformed(evt);
-            }
-        });
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -78,9 +74,6 @@ public class Saque extends javax.swing.JFrame {
         saldo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         saldo.setText("0,00");
 
-        saldo1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        saldo1.setText("R$");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -89,8 +82,6 @@ public class Saque extends javax.swing.JFrame {
                 .addGap(90, 90, 90)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(saldo1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btDeposito)
@@ -106,8 +97,7 @@ public class Saque extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btDeposito)
-                    .addComponent(saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(saldo1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51))
         );
 
@@ -247,7 +237,7 @@ public class Saque extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>//GEN-END:initComponentsΩ
 
     private void inputNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNomeActionPerformed
         // TODO add your handling code here:
@@ -267,8 +257,9 @@ public class Saque extends javax.swing.JFrame {
 
     private void btConfirmaSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmaSaqueActionPerformed
     try {
-        String cpf = inputCpf.getText().trim();
-        String valorStr = inputValor.getText().trim().replace(",", ".");
+        int idUser = SessaoUsuario.idUsuarioLogado;
+        int cpf = Integer.parseInt(inputCpf.getText().trim());
+        String valorStr = inputValor.getText().trim();
         double valor = Double.parseDouble(valorStr);
 
         if (valor < 200) {
@@ -279,9 +270,10 @@ public class Saque extends javax.swing.JFrame {
         Connection conn = Conexao.getConexao();
 
       
-        String sqlBuscaUsuario = "SELECT id_usuario FROM user WHERE cpf = ?";
+        String sqlBuscaUsuario = "SELECT id_usuario FROM user WHERE id = ? and cpf = ?";
         PreparedStatement stmtBusca = conn.prepareStatement(sqlBuscaUsuario);
-        stmtBusca.setString(1, cpf);
+        stmtBusca.setInt(1, idUser);
+        stmtBusca.setInt(1, cpf);
         ResultSet rs = stmtBusca.executeQuery();
 
         if (!rs.next()) {
@@ -404,6 +396,5 @@ public class Saque extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel saldo;
-    private javax.swing.JLabel saldo1;
     // End of variables declaration//GEN-END:variables
 }

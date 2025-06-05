@@ -315,7 +315,17 @@ public class Deposito extends javax.swing.JFrame {
             }
 
             JOptionPane.showMessageDialog(this, "Depósito realizado com sucesso!");
+
+            String sql = "SELECT saldo FROM conta WHERE id_usuario = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            int saldoFinal = 0;
+            if (rs.next()) {
+                saldoFinal = rs.getInt("saldo");
+            }
             atualizarSaldo(cpf);
+            saldo.setText(String.valueOf(valor + saldoFinal));
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Digite um valor numérico válido.");

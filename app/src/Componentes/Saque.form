@@ -61,6 +61,8 @@
                   <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="saldo1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="saldo" min="-2" pref="80" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btDeposito" min="-2" max="-2" attributes="0"/>
@@ -80,6 +82,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btDeposito" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="saldo" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="saldo1" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
               </Group>
@@ -120,7 +123,15 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="$ 0,00"/>
+            <Property name="text" type="java.lang.String" value="0,00"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="saldo1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="R$"/>
           </Properties>
         </Component>
       </SubComponents>

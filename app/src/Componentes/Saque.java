@@ -15,8 +15,7 @@ public class Saque extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         double saldoAtual = ConsultaSaldo.consultarSaldo(Login.SessaoUsuario.idUsuarioLogado);
-        String saldostr = String.format(String.valueOf(saldoAtual));
-        saldo.setText(saldostr);
+        saldo.setText(String.format("R$ %.2f", saldoAtual));
     }
 
     /**
@@ -258,8 +257,14 @@ public class Saque extends javax.swing.JFrame {
     private void btConfirmaSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmaSaqueActionPerformed
     try {
         int idUser = SessaoUsuario.idUsuarioLogado;
-        int cpf = Integer.parseInt(inputCpf.getText().trim());
-        String valorStr = inputValor.getText().trim();
+        // Pega e limpa o CPF
+        String cpfStr = inputCpf.getText().trim().replaceAll("[^0-9]", "");
+        System.out.println("CPF digitado (limpo): " + cpfStr);
+        long cpf = Long.parseLong(cpfStr);
+
+        // Pega e trata o valor
+        String valorStr = inputValor.getText().trim().replace(",", ".");
+        System.out.println("Valor digitado (formatado): " + valorStr);
         double valor = Double.parseDouble(valorStr);
 
         if (valor < 200) {
@@ -270,10 +275,10 @@ public class Saque extends javax.swing.JFrame {
         Connection conn = Conexao.getConexao();
 
       
-        String sqlBuscaUsuario = "SELECT id_usuario FROM user WHERE id = ? and cpf = ?";
+        String sqlBuscaUsuario = "SELECT id_usuario FROM user WHERE id_usuario = ? and cpf = ?";
         PreparedStatement stmtBusca = conn.prepareStatement(sqlBuscaUsuario);
         stmtBusca.setInt(1, idUser);
-        stmtBusca.setInt(1, cpf);
+        stmtBusca.setLong(2, cpf);
         ResultSet rs = stmtBusca.executeQuery();
 
         if (!rs.next()) {
@@ -307,6 +312,8 @@ public class Saque extends javax.swing.JFrame {
         stmtSaque.setDouble(1, valor);
         stmtSaque.setInt(2, idUsuario);
         stmtSaque.executeUpdate();
+
+        saldo.setText(String.format("R$ %.2f", saldoAtual - valor));
 
         JOptionPane.showMessageDialog(this, "Saque realizado com sucesso!");
 

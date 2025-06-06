@@ -5,7 +5,7 @@ public class Conexao {
 
     private static final String url = "jdbc:mysql://localhost:3306/jogodobicho";
     private static final String user = "root";
-    private static final String password = "0584";
+    private static final String password = "";
 
     public static Connection conn;
 

@@ -178,6 +178,7 @@ public class Jogo extends JFrame {
             int numAposta = Integer.parseInt(numeroApostaInput.getText());
             double valorAposta = Double.parseDouble(valorApostaInput.getText());
             double saldoInicial = Double.parseDouble(saldo.getText());
+            int quantidadeApostas = 0;
 
             int idUser = SessaoUsuario.idUsuarioLogado;
 
@@ -192,12 +193,10 @@ public class Jogo extends JFrame {
             double saldoFinal;
             if (numAposta == numeroSorteado) {
 
+                if (quantidadeApostas < 10) {
+                   numeroSorteado = sr.nextInt(10) + 1;
+                }
 
-                // int jogadas = consultarJogadas.numJogadas;
-                
-                // if (jogadas < 10) {
-                   // numeroSorteado = sr.nextInt(10) + 1;
-                //}
                 saldoFinal = saldoInicial + (valorAposta * 2);
                 showMessageDialog(this, "Você ganhou !");
                 showMessageDialog(this, "Ganho de: " + (valorAposta * 2));

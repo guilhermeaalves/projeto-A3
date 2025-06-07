@@ -28,6 +28,15 @@ public class Jogo extends JFrame {
     public Jogo() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setSize(1280, 720);
+        this.setResizable(true);
+        this.setTitle("Jogo");
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setVisible(true);
+        this.setAlwaysOnTop(true);
+        this.setUndecorated(true);
+        this.setOpacity(0.8f);
+        this.setLocationRelativeTo(null);
         double saldoAtual = ConsultaSaldo.consultarSaldo(SessaoUsuario.idUsuarioLogado);
         saldo.setText(String.valueOf(saldoAtual));
     }

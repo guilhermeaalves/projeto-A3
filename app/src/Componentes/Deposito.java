@@ -18,6 +18,14 @@ public class Deposito extends javax.swing.JFrame {
     public Deposito() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setSize(1280, 720);
+        this.setResizable(true);
+        this.setTitle("Depósito");
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setVisible(true);
+        this.setAlwaysOnTop(true);
+        this.setUndecorated(true);
+        this.setOpacity(0.8f);
         double saldoAtual = ConsultaSaldo.consultarSaldo(SessaoUsuario.idUsuarioLogado);
         saldo.setText(String.format("R$ %.2f", saldoAtual));
     }

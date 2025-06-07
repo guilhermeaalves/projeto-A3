@@ -22,6 +22,14 @@ public class Cadastro extends javax.swing.JFrame {
     public Cadastro() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setSize(1280, 720);
+        this.setResizable(true);
+        this.setTitle("Cadastro");
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setVisible(true);
+        this.setAlwaysOnTop(true);
+        this.setUndecorated(true);
+        this.setOpacity(0.8f);
     }
 
     /**

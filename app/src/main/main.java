@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package main;
-
+import Componentes.TelaInicial;
+import javax.swing.*;
 /**
  *
  * @author 825155699
@@ -14,7 +15,23 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        try {
+            // Aplica o visual Nimbus
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // Usa o padrão caso dê erro
+        }
+
+        // Abre a tela inicial
+        java.awt.EventQueue.invokeLater(() -> {
+            TelaInicial tela = new TelaInicial();
+            tela.setVisible(true);
+        });
     }
     
 }

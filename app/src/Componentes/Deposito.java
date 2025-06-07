@@ -267,8 +267,7 @@ public class Deposito extends javax.swing.JFrame {
         try {
             int idUser = SessaoUsuario.idUsuarioLogado;
 
-            String cpfStr = inputCpf.getText().trim().replaceAll("[^0-9]", "");
-            long cpf = Long.parseLong(cpfStr);
+            String cpf = inputCpf.getText().trim().replaceAll("[^0-9]", "");
 
             String valorStr = inputValor.getText().trim().replace(",", ".");
             double valor = Double.parseDouble(valorStr);
@@ -280,41 +279,54 @@ public class Deposito extends javax.swing.JFrame {
 
             Connection conn = Conexao.getConexao();
 
-            String sqlBuscaUsuario = "SELECT id_usuario FROM user WHERE id_usuario = ? and cpf = ?";
+            String sqlBuscaUsuario = "SELECT id_usuario FROM user WHERE id_usuario = ? AND cpf = ?";
             PreparedStatement stmtBusca = conn.prepareStatement(sqlBuscaUsuario);
             stmtBusca.setInt(1, idUser);
-            stmtBusca.setLong(2, cpf);
+            stmtBusca.setString(2, cpf);
             ResultSet rs = stmtBusca.executeQuery();
 
             if (!rs.next()) {
                 JOptionPane.showMessageDialog(this, "CPF incorreto.");
+                rs.close();
+                stmtBusca.close();
+                conn.close();
                 return;
             }
 
-            int idUsuario = rs.getInt("id_usuario");
+            rs.close();
+            stmtBusca.close();
 
             String sqlVerificaSaldo = "SELECT saldo FROM user_saldo WHERE id_usuario = ?";
             PreparedStatement stmtVerifica = conn.prepareStatement(sqlVerificaSaldo);
-            stmtVerifica.setInt(1, idUsuario);
+            stmtVerifica.setInt(1, idUser);
             ResultSet rsSaldo = stmtVerifica.executeQuery();
 
-            double saldoAtual = rsSaldo.getDouble("saldo");
+            double saldoAtual = 0;
+            if (rsSaldo.next()) {
+                saldoAtual = rsSaldo.getDouble("saldo");
+            }
+            rsSaldo.close();
+            stmtVerifica.close();
 
             String sqlDeposito = "UPDATE user_saldo SET saldo = saldo + ? WHERE id_usuario = ?";
-            PreparedStatement stmtSaque = conn.prepareStatement(sqlDeposito);
-            stmtSaque.setDouble(1, valor);
-            stmtSaque.setInt(2, idUsuario);
-            stmtSaque.executeUpdate();
+            PreparedStatement stmtDeposito = conn.prepareStatement(sqlDeposito);
+            stmtDeposito.setDouble(1, valor);
+            stmtDeposito.setInt(2, idUser);
+            stmtDeposito.executeUpdate();
+            stmtDeposito.close();
 
             saldo.setText(String.format("R$ %.2f", saldoAtual + valor));
 
             JOptionPane.showMessageDialog(this, "Depósito realizado com sucesso!");
 
+            conn.close();
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Preencha os campos corretamente: CPF e Valor.");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao realizar saque: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro ao realizar depósito: " + e.getMessage());
         }
+
     }        // TODO add your handling code here:
 //GEN-LAST:event_btConfirmaDepositoActionPerformed
 

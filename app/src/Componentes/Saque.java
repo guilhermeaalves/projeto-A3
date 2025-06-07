@@ -256,66 +256,78 @@ public class Saque extends javax.swing.JFrame {
     }//GEN-LAST:event_inputCpfActionPerformed
 
     private void btConfirmaSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmaSaqueActionPerformed
-    try {
-        int idUser = SessaoUsuario.idUsuarioLogado;
-        int cpf = Integer.parseInt(inputCpf.getText().trim());
-        String valorStr = inputValor.getText().trim();
-        double valor = Double.parseDouble(valorStr);
+        try {
+            int idUser = SessaoUsuario.idUsuarioLogado;
 
-        if (valor < 200) {
-            JOptionPane.showMessageDialog(this, "O valor mínimo para saque é R$200.");
-            return;
+            String cpfStr = inputCpf.getText().trim().replaceAll("[^0-9]", "");
+            long cpf = Long.parseLong(cpfStr);
+
+            String valorStr = inputValor.getText().trim().replace(",", ".");
+            double valor = Double.parseDouble(valorStr);
+
+            if (valor < 200) {
+                JOptionPane.showMessageDialog(this, "O valor mínimo para saque é R$ 200,00");
+                return;
+            }
+
+            Connection conn = Conexao.getConexao();
+
+            String sqlBuscaUsuario = "SELECT id_usuario FROM user WHERE id_usuario = ? AND cpf = ?";
+            PreparedStatement stmtBusca = conn.prepareStatement(sqlBuscaUsuario);
+            stmtBusca.setInt(1, idUser);
+            stmtBusca.setLong(2, cpf);
+            ResultSet rs = stmtBusca.executeQuery();
+
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(this, "CPF incorreto.");
+                rs.close();
+                stmtBusca.close();
+                conn.close();
+                return;
+            }
+
+            int idUsuario = rs.getInt("id_usuario");
+            rs.close();
+            stmtBusca.close();
+
+            String sqlVerificaSaldo = "SELECT saldo FROM user_saldo WHERE id_usuario = ?";
+            PreparedStatement stmtVerifica = conn.prepareStatement(sqlVerificaSaldo);
+            stmtVerifica.setInt(1, idUsuario);
+            ResultSet rsSaldo = stmtVerifica.executeQuery();
+
+            double saldoAtual = 0;
+            if (rsSaldo.next()) {
+                saldoAtual = rsSaldo.getDouble("saldo");
+            }
+            rsSaldo.close();
+            stmtVerifica.close();
+
+            if (saldoAtual < valor) {
+                JOptionPane.showMessageDialog(this, "Saldo insuficiente para saque.");
+                conn.close();
+                return;
+            }
+
+            String sqlSaque = "UPDATE user_saldo SET saldo = saldo - ? WHERE id_usuario = ?";
+            PreparedStatement stmtSaque = conn.prepareStatement(sqlSaque);
+            stmtSaque.setDouble(1, valor);
+            stmtSaque.setInt(2, idUsuario);
+            stmtSaque.executeUpdate();
+            stmtSaque.close();
+
+            saldo.setText(String.format("R$ %.2f", saldoAtual - valor));
+
+            JOptionPane.showMessageDialog(this, "Saque realizado com sucesso!");
+
+            conn.close();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Preencha os campos corretamente: CPF e Valor.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao realizar saque: " + e.getMessage());
         }
 
-        Connection conn = Conexao.getConexao();
-
-      
-        String sqlBuscaUsuario = "SELECT id_usuario FROM user WHERE id = ? and cpf = ?";
-        PreparedStatement stmtBusca = conn.prepareStatement(sqlBuscaUsuario);
-        stmtBusca.setInt(1, idUser);
-        stmtBusca.setInt(1, cpf);
-        ResultSet rs = stmtBusca.executeQuery();
-
-        if (!rs.next()) {
-            JOptionPane.showMessageDialog(this, "Usuário com esse CPF não foi encontrado.");
-            return;
-        }
-
-        int idUsuario = rs.getInt("id_usuario");
-
-        
-        String sqlVerificaSaldo = "SELECT saldo FROM user_saldo WHERE id_usuario = ?";
-        PreparedStatement stmtVerifica = conn.prepareStatement(sqlVerificaSaldo);
-        stmtVerifica.setInt(1, idUsuario);
-        ResultSet rsSaldo = stmtVerifica.executeQuery();
-
-        if (!rsSaldo.next()) {
-            JOptionPane.showMessageDialog(this, "Usuário não possui saldo cadastrado.");
-            return;
-        }
-
-        double saldoAtual = rsSaldo.getDouble("saldo");
-
-        if (saldoAtual < valor) {
-            JOptionPane.showMessageDialog(this, "Saldo insuficiente para saque.");
-            return;
-        }
-
-       
-        String sqlSaque = "UPDATE user_saldo SET saldo = saldo - ? WHERE id_usuario = ?";
-        PreparedStatement stmtSaque = conn.prepareStatement(sqlSaque);
-        stmtSaque.setDouble(1, valor);
-        stmtSaque.setInt(2, idUsuario);
-        stmtSaque.executeUpdate();
-
-        JOptionPane.showMessageDialog(this, "Saque realizado com sucesso!");
-
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Digite um valor numérico válido.");
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Erro ao realizar saque: " + e.getMessage());
     }
-}
 //GEN-LAST:event_btConfirmaSaqueActionPerformed
 
     private void inputChavePixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputChavePixActionPerformed

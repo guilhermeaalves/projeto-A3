@@ -178,8 +178,6 @@ public class Jogo extends JFrame {
             int numAposta = Integer.parseInt(numeroApostaInput.getText());
             double valorAposta = Double.parseDouble(valorApostaInput.getText());
             double saldoInicial = Double.parseDouble(saldo.getText());
-            int quantidadeApostas = 0;
-
             int idUser = SessaoUsuario.idUsuarioLogado;
 
             if (valorAposta > saldoInicial) {
@@ -187,22 +185,31 @@ public class Jogo extends JFrame {
                 return;
             }
 
+            Connection conn = Conexao.getConexao();
+
+            String sqlBuscaJogo = "SELECT num_apostas, valor_apostado FROM jogo WHERE id_usuario = ?";
+            PreparedStatement stmtBusca = conn.prepareStatement(sqlBuscaJogo);
+            stmtBusca.setInt(1, idUser);
+            ResultSet rs = stmtBusca.executeQuery();
+
+            int quantidadeApostas = 0;
+            double valorTotal = 0;
+
+            boolean existeLinha = false;
+            if (rs.next()) {
+                existeLinha = true;
+                quantidadeApostas = rs.getInt("num_apostas");
+                valorTotal = rs.getDouble("valor_apostado");
+            }
+
             SecureRandom sr = new SecureRandom();
-            int numeroSorteado = sr.nextInt(10000) + 1;
+            int numeroSorteado = quantidadeApostas >= 10 ? sr.nextInt(5) + 1 : sr.nextInt(10000) + 1;
 
             double saldoFinal;
             if (numAposta == numeroSorteado) {
-
-                if (quantidadeApostas < 10) {
-                   numeroSorteado = sr.nextInt(10) + 1;
-                }
-
-                saldoFinal = saldoInicial + (valorAposta * 2);
-                showMessageDialog(this, "Você ganhou !");
+                saldoFinal = saldoInicial + (valorAposta * 10);
+                showMessageDialog(this, "Você ganhou!");
                 showMessageDialog(this, "Ganho de: " + (valorAposta * 2));
-                saldo.setText(String.valueOf(saldoFinal));
-
-
             } else {
                 saldoFinal = saldoInicial - valorAposta;
                 showMessageDialog(this, "Não foi dessa vez");
@@ -210,20 +217,40 @@ public class Jogo extends JFrame {
             }
 
             saldo.setText(String.valueOf(saldoFinal));
+            numeroApostaInput.setText("");
+            valorApostaInput.setText("");
+            numeroApostaInput.requestFocus();
+            numeroApostaInput.selectAll();
 
-            String sql = "UPDATE user_saldo SET saldo = ? WHERE id_usuario = ?";
-            Connection conn = Conexao.getConexao();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setDouble(1, saldoFinal);
-            pstmt.setInt(2, idUser);
-            pstmt.executeUpdate();
-            pstmt.close();
+            String sqlUpdateSaldo = "UPDATE user_saldo SET saldo = ? WHERE id_usuario = ?";
+            PreparedStatement stmtSaldo = conn.prepareStatement(sqlUpdateSaldo);
+            stmtSaldo.setDouble(1, saldoFinal);
+            stmtSaldo.setInt(2, idUser);
+            stmtSaldo.executeUpdate();
+
+            if (existeLinha) {
+                String sqlUpdateJogo = "UPDATE jogo SET num_apostas = ?, valor_apostado = ? WHERE id_usuario = ?";
+                PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdateJogo);
+                stmtUpdate.setInt(1, quantidadeApostas + 1);
+                stmtUpdate.setDouble(2, valorTotal + valorAposta);
+                stmtUpdate.setInt(3, idUser);
+                stmtUpdate.executeUpdate();
+            } else {
+                String sqlInsertJogo = "INSERT INTO jogo (id_usuario, num_apostas, valor_apostado) VALUES (?, ?, ?)";
+                PreparedStatement stmtInsert = conn.prepareStatement(sqlInsertJogo);
+                stmtInsert.setInt(1, idUser);
+                stmtInsert.setInt(2, 1);
+                stmtInsert.setDouble(3, valorAposta);
+                stmtInsert.executeUpdate();
+            }
+
             conn.close();
 
         } catch (Exception e) {
             e.printStackTrace();
             showMessageDialog(this, e.getMessage());
         }
+
     }
 
     /**

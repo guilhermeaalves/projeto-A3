@@ -257,14 +257,11 @@ public class Saque extends javax.swing.JFrame {
     private void btConfirmaSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmaSaqueActionPerformed
     try {
         int idUser = SessaoUsuario.idUsuarioLogado;
-        // Pega e limpa o CPF
+
         String cpfStr = inputCpf.getText().trim().replaceAll("[^0-9]", "");
-        System.out.println("CPF digitado (limpo): " + cpfStr);
         long cpf = Long.parseLong(cpfStr);
 
-        // Pega e trata o valor
         String valorStr = inputValor.getText().trim().replace(",", ".");
-        System.out.println("Valor digitado (formatado): " + valorStr);
         double valor = Double.parseDouble(valorStr);
 
         if (valor < 200) {

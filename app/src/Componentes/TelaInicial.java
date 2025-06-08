@@ -19,13 +19,7 @@ public class TelaInicial extends javax.swing.JFrame {
         initComponents();
         this.setSize(1280, 720);
         this.setLocationRelativeTo(null);
-        this.setResizable(true);
         this.setTitle("Home");
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setVisible(true);
-        this.setAlwaysOnTop(true);
-        this.setUndecorated(true);
-        this.setOpacity(0.8f);
     }
     /**
      * This method is called from within the constructor to initialize the form.

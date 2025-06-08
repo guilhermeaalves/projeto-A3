@@ -19,13 +19,7 @@ public class Deposito extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setSize(1280, 720);
-        this.setResizable(true);
         this.setTitle("Depósito");
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setVisible(true);
-        this.setAlwaysOnTop(true);
-        this.setUndecorated(true);
-        this.setOpacity(0.8f);
         double saldoAtual = ConsultaSaldo.consultarSaldo(SessaoUsuario.idUsuarioLogado);
         saldo.setText(String.format("R$ %.2f", saldoAtual));
     }
@@ -340,14 +334,13 @@ public class Deposito extends javax.swing.JFrame {
 
     private void btSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaqueActionPerformed
         // TODO add your handling code here:
-
         new Saque().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btSaqueActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         new TelaInicialPosLogin().setVisible(true);
-
+        this.dispose();
     }//GEN-LAST:event_jLabel3MouseClicked
 
     /**

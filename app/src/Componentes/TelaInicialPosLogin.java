@@ -31,16 +31,10 @@ public class TelaInicialPosLogin extends javax.swing.JFrame {
     public TelaInicialPosLogin() {
         initComponents();
         this.setSize(1280, 720);
-        this.setResizable(true);
-        this.setTitle("Home (Logado)");
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setVisible(true);
-        this.setAlwaysOnTop(true);
-        this.setUndecorated(true);
-        this.setOpacity(0.8f);
         this.setLocationRelativeTo(null);
         double saldoAtual = ConsultaSaldo.consultarSaldo(Login.SessaoUsuario.idUsuarioLogado);
         saldo.setText(String.format("R$ %.2f", saldoAtual));
+        this.setTitle("Home (Logado)");
     }
 
 

@@ -29,14 +29,7 @@ public class Jogo extends JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setSize(1280, 720);
-        this.setResizable(true);
         this.setTitle("Jogo");
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setVisible(true);
-        this.setAlwaysOnTop(true);
-        this.setUndecorated(true);
-        this.setOpacity(0.8f);
-        this.setLocationRelativeTo(null);
         double saldoAtual = ConsultaSaldo.consultarSaldo(SessaoUsuario.idUsuarioLogado);
         saldo.setText(String.valueOf(saldoAtual));
     }
@@ -218,11 +211,11 @@ public class Jogo extends JFrame {
             if (numAposta == numeroSorteado) {
                 saldoFinal = saldoInicial + (valorAposta * 10);
                 showMessageDialog(this, "Você ganhou!");
-                showMessageDialog(this, "Ganho de: " + (valorAposta * 2));
+                showMessageDialog(this, "Ganho de: R$" + (valorAposta * 2));
             } else {
                 saldoFinal = saldoInicial - valorAposta;
                 showMessageDialog(this, "Não foi dessa vez");
-                showMessageDialog(this, "Perda de: " + valorAposta);
+                showMessageDialog(this, "Perda de: R$" + valorAposta);
             }
 
             saldo.setText(String.valueOf(saldoFinal));
